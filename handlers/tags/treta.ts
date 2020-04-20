@@ -5,6 +5,10 @@ export const tretaHandler: UpdateHandlers['tags']['treta'] = async (message, con
   const repliedMessageId = message.reply_to_message?.message_id
 
   if (!repliedMessageId) return endWithText('Responda a mensagem que deseja encaminhar', context, { reply: true })
+  
+  if (context.update.message?.chat.id === process.env.DESTINATION_CHAT_ID!) {
+      return endWithText('Cê não entendeu o que é pra fazer, ou tá querendo encher o meu saco mesmo, jovem?', context, { reply: true })
+  }
 
   try {
     const forwardedMessage = await forwardMessage(repliedMessageId, process.env.DESTINATION_CHAT_ID!, context)
